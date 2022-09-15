@@ -1,9 +1,15 @@
 #include <Arduino.h>
 #include <WebSocket.h>
 #include <TemperatureSensor.h>
+#include <LedHandler.h>
 
 const unsigned long timeIntervall = 60*1000/2; // 15 minutes
 unsigned long timeStamp = 0;
+
+void executePeriodicTasks() {
+  const float temperature = TemperatureSensor::readSensor();
+  WebSocket::notifyClients(String(temperature));
+}
 
 void setup() {
   Serial.begin(115200);
@@ -11,11 +17,7 @@ void setup() {
   setupWebServer();
   WebSocket::setUpWebSocket();
   TemperatureSensor::initTemperatureSensor();
-}
-
-void executePeriodicTasks() {
-  const float temperature = TemperatureSensor::readSensor();
-  WebSocket::notifyClients(String(temperature));
+  LedHandler::initLedHandler();
 }
 
 void loop() {
