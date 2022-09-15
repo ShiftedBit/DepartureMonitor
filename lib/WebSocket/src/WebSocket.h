@@ -1,14 +1,17 @@
 #include <Arduino.h>
 #include <WebServer.h>
 
-extern AsyncWebSocket ws;
+namespace WebSocket {
 
-void notifyClients();
-void handleWebSocketMessage(void *arg, uint8_t *data, size_t len);
+    extern AsyncWebSocket ws;
 
-void onEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type,
-            void *arg, uint8_t *data, size_t len);
+    void notifyClients(String data);
+    void processMessage(String message);
+    void handleWebSocketMessage(void *arg, uint8_t *data, size_t len);
 
-void setUpWebSocket();
+    void onEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type,
+                void *arg, uint8_t *data, size_t len);
 
+    void setUpWebSocket();
 
+}
