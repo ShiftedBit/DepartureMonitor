@@ -47,5 +47,5 @@ void setupWebServer() {
 void setupWifiManager() {
   AsyncWiFiManager wifiManager(&server, &dns);  
   Serial.println("Setup called");
-  wifiManager.autoConnect("WeatherStation");
+  wifiManager.autoConnect("DepartureMonitor");
 }
