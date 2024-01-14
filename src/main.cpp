@@ -1,16 +1,13 @@
 #include <Arduino.h>
 #include <WebSocket.h>
-#include <TemperatureSensor.h>
 #include <LedHandler.h>
-#include <MqttService.h>
+#include <WebClient.h>
 
 const unsigned long timeIntervall = 60*1000/2; // 15 minutes
 unsigned long timeStamp = 0;
 
 void executePeriodicTasks() {
-  const float temperature = TemperatureSensor::readSensor();
-  WebSocket::notifyClients(String(temperature));
-  MqttService::publish(String(temperature));
+  WebClient::fetchData("Test");
 }
 
 void setup() {
@@ -18,9 +15,7 @@ void setup() {
   setupWifiManager();
   setupWebServer();
   WebSocket::setUpWebSocket();
-  TemperatureSensor::initTemperatureSensor();
   LedHandler::initLedHandler();
-  MqttService::connectToMqtt();
 }
 
 void loop() {
